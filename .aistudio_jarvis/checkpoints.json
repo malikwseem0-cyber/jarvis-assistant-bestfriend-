@@ -1,0 +1,18 @@
+[
+  {
+    "id": "checkpoint-1792205076491",
+    "patchId": "patch-001",
+    "patchTitle": "Streamlined File Indexing Memory Footprint",
+    "timestamp": "2026-10-17T02:44:36.491Z",
+    "targetFile": "tools/file_tools.py",
+    "status": "active"
+  },
+  {
+    "id": "checkpoint-genesis-001",
+    "patchId": "patch-core-baseline",
+    "patchTitle": "JARVIS Baseline Architecture Checkpoint",
+    "timestamp": "2026-10-17T01:44:36.491Z",
+    "targetFile": "core/assistant.py",
+    "status": "active"
+  }
+]

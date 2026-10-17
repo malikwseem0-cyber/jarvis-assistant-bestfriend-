@@ -1,0 +1,15 @@
+[
+  {
+    "id": "mem-1792205838278",
+    "category": "preference",
+    "key": "JARVIS Voice Profile",
+    "value": "{\"pitch\":0.88,\"speed\":0.95,\"genderResonance\":\"baritone\",\"voice\":\"Fenrir\",\"style\":\"British Courtesy\"}",
+    "tags": [
+      "voice",
+      "audio"
+    ],
+    "confidence": 1,
+    "createdAt": "2026-10-17T02:57:18.278Z",
+    "updatedAt": "2026-10-17T02:57:18.278Z"
+  }
+]

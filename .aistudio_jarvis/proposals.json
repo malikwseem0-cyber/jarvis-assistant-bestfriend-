@@ -1,0 +1,77 @@
+[
+  {
+    "id": "patch-001",
+    "title": "Streamlined File Indexing Memory Footprint",
+    "description": "Implement chunked generator streaming in file_tools.py to decrease memory usage on large Windows C:\\ scans by 65%.",
+    "category": "performance",
+    "risk": "Low (Level 1)",
+    "riskLevel": 1,
+    "targetFile": "tools/file_tools.py",
+    "urduExplanation": "Yeh patch file indexing ke waqt memory usage ko 65% kam karta hai taakay 12GB RAM wale computer par bhi fast search ho sakay.",
+    "diff": "--- a/tools/file_tools.py\n+++ b/tools/file_tools.py\n@@ -45,7 +45,9 @@ def scan_directory(root_path: str):\n-    all_files = [os.path.join(r, f) for r, _, fs in os.walk(root_path) for f in fs]\n-    return all_files\n+    for r, _, fs in os.walk(root_path):\n+        for f in fs:\n+            yield os.path.join(r, f)\n",
+    "tests": [
+      "test_generator_yield()",
+      "test_memory_bounded_under_10mb()"
+    ],
+    "status": "applied",
+    "testResults": [
+      {
+        "name": "test_generator_yield()",
+        "status": "pass",
+        "durationMs": 14
+      },
+      {
+        "name": "test_memory_bounded_under_10mb()",
+        "status": "pass",
+        "durationMs": 35
+      }
+    ]
+  },
+  {
+    "id": "patch-002",
+    "title": "Defensive Path-Traversal Guard for Downloads Organizer",
+    "description": "Strictly normalize paths with os.path.abspath and assert target belongs within C:\\Users\\...\\Downloads.",
+    "category": "security",
+    "risk": "Medium (Level 2)",
+    "riskLevel": 2,
+    "targetFile": "tools/file_tools.py",
+    "urduExplanation": "Yeh patch security ko mazboot banata hai taakay koi bhi file user folder se bahar ghalti se move ya delete na ho sakay.",
+    "diff": "--- a/tools/file_tools.py\n+++ b/tools/file_tools.py\n@@ -112,6 +112,10 @@ def organize_download_item(source_path: str, dest_dir: str):\n+    safe_dest = os.path.abspath(dest_dir)\n+    if not safe_dest.startswith(os.path.abspath(os.environ.get(\"USERPROFILE\", \"C:\\Users\\Default\"))):\n+        raise PermissionError(\"Path traversal escape outside user directory rejected.\")\n",
+    "tests": [
+      "test_path_traversal_blocked()",
+      "test_normal_move_succeeds()"
+    ],
+    "status": "ready_for_review"
+  },
+  {
+    "id": "patch-003",
+    "title": "Subprocess Argument List Injection Prevention",
+    "description": "Enforce rigid argv list formatting for all Python system subshells to eliminate command-injection risks.",
+    "category": "security",
+    "risk": "Medium (Level 2)",
+    "riskLevel": 2,
+    "targetFile": "core/permissions.py",
+    "urduExplanation": "Yeh patch shell commands ko safe list format mein tabdeel karta hai taakay command injection attacks block ho sakein.",
+    "diff": "--- a/core/permissions.py\n+++ b/core/permissions.py\n@@ -28,5 +28,8 @@ def execute_command(cmd_args: list):\n+    if isinstance(cmd_args, str):\n+        raise ValueError(\"Raw shell strings strictly forbidden. Pass argv array.\")\n+    return subprocess.run(cmd_args, capture_output=True, check=True)\n",
+    "tests": [
+      "test_raw_shell_string_rejected()",
+      "test_argv_array_executes_safely()"
+    ],
+    "status": "ready_for_review"
+  },
+  {
+    "id": "patch-004",
+    "title": "Adaptive Audio Analyser FFT Smoothing Filter",
+    "description": "Introduce exponential moving average filter to audio visualizer waveform to eliminate high-frequency jitter.",
+    "category": "architecture",
+    "risk": "Low (Level 1)",
+    "riskLevel": 1,
+    "targetFile": "src/components/AudioWaveform.tsx",
+    "urduExplanation": "Yeh patch voice waveform aur holographic orb ki pulsation ko smooth aur zyada cinematic banata hai.",
+    "diff": "--- a/src/components/AudioWaveform.tsx\n+++ b/src/components/AudioWaveform.tsx\n@@ -52,3 +52,5 @@ function computeSmoothWave(rawAmp, prevAmp) {\n+    const smoothingFactor = 0.85;\n+    return prevAmp * smoothingFactor + rawAmp * (1 - smoothingFactor);\n }\n",
+    "tests": [
+      "test_waveform_smoothing_clamped()"
+    ],
+    "status": "ready_for_review"
+  }
+]

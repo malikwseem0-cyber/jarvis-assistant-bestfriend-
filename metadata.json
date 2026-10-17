@@ -1,0 +1,6 @@
+{
+  "name": "JARVIS AI — ULTRA EXTREME PC MASTER EDITION",
+  "description": "Voice-controlled next-generation Windows PC AI assistant with 3D holographic orb, digital face, system monitoring, file intelligence, persistent memory, and approval-first self-improvement.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
